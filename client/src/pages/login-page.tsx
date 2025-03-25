@@ -63,10 +63,10 @@ export default function LoginPage() {
           <form onSubmit={handleSubmit}>
             <div className="space-y-4">
               <div className="space-y-2">
-                <Label htmlFor="username">Username</Label>
+                <Label htmlFor="username">Usuário</Label>
                 <Input
                   id="username"
-                  placeholder="Enter your username"
+                  placeholder="Digite seu usuário"
                   value={username}
                   onChange={(e) => setUsername(e.target.value)}
                   disabled={isLoading}
@@ -74,11 +74,11 @@ export default function LoginPage() {
                 />
               </div>
               <div className="space-y-2">
-                <Label htmlFor="password">Password</Label>
+                <Label htmlFor="password">Senha</Label>
                 <Input
                   id="password"
                   type="password"
-                  placeholder="Enter your password"
+                  placeholder="Digite sua senha"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   disabled={isLoading}
@@ -94,10 +94,10 @@ export default function LoginPage() {
                 {isLoading ? (
                   <>
                     <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                    Signing in...
+                    Entrando...
                   </>
                 ) : (
-                  "Sign in"
+                  "Entrar"
                 )}
               </Button>
             </div>
@@ -105,7 +105,7 @@ export default function LoginPage() {
         </CardContent>
         <CardFooter className="flex justify-center">
           <p className="text-xs text-muted-foreground">
-            Demo credentials: admin/admin123 (Admin) or leader_novo/leader123 (Leader)
+            Credenciais de demonstração: admin/admin123 (Admin) ou leader_novo/leader123 (Líder)
           </p>
         </CardFooter>
       </Card>
