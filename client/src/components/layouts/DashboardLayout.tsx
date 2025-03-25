@@ -6,6 +6,7 @@ import ThemeSwitcher from "@/components/ThemeSwitcher";
 import { Button } from "@/components/ui/button";
 import { Menu, LogOut } from "lucide-react";
 import useMobile from "@/hooks/use-mobile";
+import { Footer } from "@/components/Footer";
 
 interface DashboardLayoutProps {
   children: ReactNode;
@@ -29,19 +30,19 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
     setIsSidebarOpen(!isMobile);
   }, [isMobile]);
 
-  // Navigation items based on user role
+  // Navigation items based on user role (Traduzido para Português)
   const navItems = [
-    { href: "/", label: "Dashboard", icon: "home" },
+    { href: "/", label: "Painel", icon: "home" },
     ...(role === "admin" || role === "promoter"
-      ? [{ href: "/products", label: "Products", icon: "package" }]
+      ? [{ href: "/products", label: "Produtos", icon: "package" }]
       : []),
     ...(role === "admin"
-      ? [{ href: "/stores", label: "Manage Stores", icon: "store" }]
+      ? [{ href: "/stores", label: "Gerenciar Lojas", icon: "store" }]
       : []),
     ...(role === "leader"
-      ? [{ href: "/users", label: "Manage Users", icon: "users" }]
+      ? [{ href: "/users", label: "Gerenciar Usuários", icon: "users" }]
       : []),
-    { href: "/stock", label: "Stock Management", icon: "layers" },
+    { href: "/stock", label: "Controle de Estoque", icon: "layers" },
   ];
 
   return (
@@ -57,7 +58,7 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
           <Menu className="h-6 w-6" />
         </Button>
         <div className="flex flex-1 items-center justify-between">
-          <span className="font-semibold">Inventory System</span>
+          <span className="font-semibold">ValidaPro</span>
           <div className="flex items-center gap-2">
             <ThemeSwitcher />
           </div>
@@ -96,7 +97,7 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
           {/* Desktop Header */}
           <header className="hidden md:flex items-center justify-between mb-6">
             <h1 className="text-xl font-semibold">
-              Inventory Management System
+              ValidaPro - Controle profissional de validades
             </h1>
             <div className="flex items-center gap-4">
               <ThemeSwitcher />
@@ -117,6 +118,7 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
           {children}
         </main>
       </div>
+      <Footer />
     </div>
   );
 }
