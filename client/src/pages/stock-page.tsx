@@ -311,7 +311,7 @@ export default function StockPage() {
                           </FormControl>
                           <SelectContent>
                             {isLoadingProducts ? (
-                              <SelectItem value="" disabled>
+                              <SelectItem value="loading" disabled>
                                 Loading products...
                               </SelectItem>
                             ) : (
