@@ -189,7 +189,7 @@ export default function ProductsPage() {
         <div className="relative">
           <SearchIcon className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
           <Input
-            placeholder="Search products by name or EAN..."
+            placeholder="Buscar produtos por nome ou EAN..."
             className="pl-10"
             value={searchQuery}
             onChange={handleSearch}
@@ -199,7 +199,7 @@ export default function ProductsPage() {
         {/* Products List */}
         <Card>
           <CardHeader>
-            <CardTitle>Products</CardTitle>
+            <CardTitle>Produtos</CardTitle>
           </CardHeader>
           <CardContent>
             {isLoading ? (
@@ -212,10 +212,10 @@ export default function ProductsPage() {
                   <thead>
                     <tr className="border-b">
                       <th className="px-4 py-3 text-left text-xs font-medium uppercase tracking-wider">ID</th>
-                      <th className="px-4 py-3 text-left text-xs font-medium uppercase tracking-wider">Product Name</th>
+                      <th className="px-4 py-3 text-left text-xs font-medium uppercase tracking-wider">Nome do Produto</th>
                       <th className="px-4 py-3 text-left text-xs font-medium uppercase tracking-wider">EAN</th>
-                      <th className="px-4 py-3 text-left text-xs font-medium uppercase tracking-wider">Category</th>
-                      <th className="px-4 py-3 text-left text-xs font-medium uppercase tracking-wider">Created</th>
+                      <th className="px-4 py-3 text-left text-xs font-medium uppercase tracking-wider">Categoria</th>
+                      <th className="px-4 py-3 text-left text-xs font-medium uppercase tracking-wider">Criado em</th>
                     </tr>
                   </thead>
                   <tbody className="divide-y">
@@ -235,7 +235,7 @@ export default function ProductsPage() {
               </div>
             ) : (
               <div className="text-center py-8">
-                <p className="text-muted-foreground">No products found. Try a different search or add a new product.</p>
+                <p className="text-muted-foreground">Nenhum produto encontrado. Tente uma busca diferente ou adicione um novo produto.</p>
               </div>
             )}
           </CardContent>

@@ -53,7 +53,7 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
           variant="ghost"
           size="icon"
           onClick={() => setIsSidebarOpen(!isSidebarOpen)}
-          aria-label="Toggle Menu"
+          aria-label="Alternar Menu"
         >
           <Menu className="h-6 w-6" />
         </Button>
@@ -84,7 +84,7 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
                 variant="ghost" 
                 size="icon" 
                 onClick={logout}
-                aria-label="Logout"
+                aria-label="Sair"
               >
                 <LogOut className="h-4 w-4" />
               </Button>
@@ -107,7 +107,7 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
                   variant="ghost" 
                   size="icon" 
                   onClick={logout}
-                  aria-label="Logout"
+                  aria-label="Sair"
                 >
                   <LogOut className="h-4 w-4" />
                 </Button>
