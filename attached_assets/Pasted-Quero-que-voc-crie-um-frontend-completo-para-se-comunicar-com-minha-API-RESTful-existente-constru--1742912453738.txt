@@ -1,0 +1,130 @@
+Quero que você crie um frontend completo para se comunicar com minha API RESTful existente, construída em Node.js com Express e SQLite. O frontend deve ser elegante, funcional e seguir boas práticas de UX/UI, com um design moderno e responsivo. Abaixo estão os detalhes da API e os requisitos específicos para o frontend:
+
+---
+
+### Detalhes da API
+- **Base URL:** `http://localhost:3000`
+- **Autenticação:** Todas as rotas protegidas requerem o header `Authorization: Bearer <token>`, onde o token é obtido via login.
+- **Rotas disponíveis:**
+
+1. **Autenticação**
+   - `POST /auth/login`
+     - Body: `{ "username": "string", "password": "string" }`
+     - Resposta: `{ "token": "string", "role": "string" }` (200 OK) ou `{ "error": "Credenciais inválidas" }` (401)
+
+2. **Admin - Criação de Lojas e Líderes**
+   - `POST /admin/stores` (protegida: admin)
+     - Body: `{ "storeName": "string", "leaderUsername": "string", "leaderPassword": "string" }`
+     - Resposta: `{ "message": "Loja e líder criados com sucesso" }` (201)
+
+3. **Líder - Criação de Usuários**
+   - `POST /leader/users` (protegida: leader)
+     - Body: `{ "username": "string", "password": "string", "role": "string" }` (role: "promoter" ou "repositor")
+     - Resposta: `{ "message": "Usuário criado com sucesso" }` (201)
+
+4. **Produtos**
+   - `GET /products` (pública)
+     - Resposta: Array de produtos `[{ "product_id": int, "name": "string", "ean": "string", "category": "string|null", "created_at": "timestamp" }]`
+   - `POST /products` (protegida: admin, promoter)
+     - Body: `{ "name": "string", "ean": "string" }`
+     - Resposta: `{ "product_id": int, "message": "Produto cadastrado com sucesso" }` (201)
+   - `GET /products/search?q=<query>` (protegida: admin, promoter)
+     - Resposta: Array de produtos filtrados por `ean` ou `name`
+
+5. **Estoque**
+   - `POST /stock` (protegida: admin, leader, promoter, repositor)
+     - Body: `{ "product_id": int, "expiration_date": "YYYY-MM-DD", "quantity": int, "store_id": int }` (store_id opcional para admin)
+     - Resposta: `{ "message": "Estoque atualizado" }` (200)
+   - `GET /stock?start_date=<date>&end_date=<date>&min_quantity=<int>&max_quantity=<int>` (protegida: admin, leader, promoter, repositor)
+     - Resposta: Array de estoque `[{ "name": "string", "ean": "string", "expiration_date": "date", "quantity": int, "days_remaining": int }]`
+
+- **Usuários no banco (exemplo):**
+  - `admin` (senha: "admin123", role: "admin")
+  - `leader_novo` (senha: "leader123", role: "leader", store_id: 1)
+  - Loja: "Loja Nova" (store_id: 1)
+
+---
+
+### Requisitos do Frontend
+
+#### Tecnologias
+- **Framework:** React.js com Vite (ou Next.js, se preferir SSR).
+- **Gerenciamento de estado:** Redux Toolkit ou Context API.
+- **Requisições HTTP:** Axios.
+- **Estilização:** Tailwind CSS para um design elegante e responsivo.
+- **Roteamento:** React Router DOM.
+- **Outros:** 
+  - Biblioteca de ícones (ex.: React Icons ou FontAwesome).
+  - Toast notifications (ex.: React Toastify) para feedback ao usuário.
+
+#### Estrutura de Páginas
+1. **Login**
+   - Campos: Username, Password.
+   - Botão "Entrar".
+   - Redireciona para o dashboard após sucesso.
+   - Mensagem de erro em caso de falha.
+
+2. **Dashboard (baseado no role)**
+   - **Admin:**
+     - Seção para criar lojas/líderes.
+     - Gerenciamento de produtos (listar, cadastrar, buscar).
+     - Visão geral de estoques de todas as lojas.
+   - **Leader:**
+     - Criar usuários (promoter/repositor).
+     - Gerenciar estoque da loja (adicionar, listar com filtros).
+   - **Promoter:**
+     - Cadastrar produtos e buscar produtos.
+     - Adicionar estoque.
+   - **Repositor:**
+     - Adicionar e listar estoque da loja.
+
+3. **Páginas específicas**
+   - **Gerenciamento de Produtos:** Lista de produtos com botão "Cadastrar Novo" e campo de busca.
+   - **Gerenciamento de Estoque:** Tabela de estoque com filtros (data inicial/final, quantidade mínima/máxima) e formulário para adicionar estoque.
+
+#### Design
+- **Estilo:** 
+  - Tema escuro/claro selecionável (botão de toggle).
+  - Paleta de cores moderna (ex.: azul escuro #1E3A8A, cinza #4B5563, branco #F9FAFB).
+  - Fontes elegantes (ex.: Inter ou Roboto do Google Fonts).
+- **Layout:**
+  - Sidebar à esquerda com navegação (ícones + texto).
+  - Header com nome do usuário logado, role e botão de logout.
+  - Área de conteúdo principal com cards ou tabelas responsivas.
+- **Responsividade:** 
+  - Funcional em desktop e mobile (sidebar colapsável em telas pequenas).
+
+#### Funcionalidades
+- **Autenticação:**
+  - Armazene o token no `localStorage` após login.
+  - Adicione um interceptor no Axios para incluir o `Authorization: Bearer <token>` em todas as requisições protegidas.
+  - Logout limpa o token e redireciona para o login.
+- **Feedback:**
+  - Toasts para sucesso (ex.: "Produto cadastrado!") e erros (ex.: "EAN já cadastrado").
+  - Loading spinner durante requisições.
+- **Validação:**
+  - Formulários com validação no frontend (ex.: EAN com pelo menos 8 dígitos, campos obrigatórios).
+- **Exibição de dados:**
+  - Tabelas paginadas para produtos e estoque.
+  - Filtros interativos no estoque (calendário para datas, inputs para quantidades).
+
+---
+
+### Entregáveis Esperados
+- Estrutura de pastas comentada (ex.: `src/components`, `src/pages`, `src/services`).
+- Código completo para:
+  - Componente de Login.
+  - Dashboard com condicionais por role.
+  - Páginas de Produtos e Estoque.
+  - Arquivo de serviço (`api.js`) com chamadas Axios para todas as rotas.
+- Arquivo `README.md` com instruções para rodar o projeto (`npm install`, `npm run dev`).
+
+---
+
+### Exemplo de Uso
+- **Login:** Usuário `admin` com senha `admin123` acessa o dashboard e cadastra um produto ("Leite Integral", EAN "1234567890123").
+- **Leader:** `leader_novo` com senha `leader123` adiciona estoque (50 unidades de "Leite Integral" na loja 1) e lista o estoque com filtro de quantidade mínima.
+
+---
+
+Por favor, gere o código completo com base nesses requisitos. O frontend deve ser elegante, funcional e pronto para se conectar à minha API. Inclua comentários explicando as principais partes do código.
