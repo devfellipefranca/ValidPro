@@ -45,10 +45,10 @@ export default function DashboardPage() {
         <Card>
           <CardContent className="pt-6">
             <h3 className="text-xl font-semibold">
-              Welcome back, {username}
+              Bem-vindo(a) de volta, {username}
             </h3>
             <p className="text-muted-foreground mt-1">
-              You are logged in as <span className="capitalize">{role}</span>
+              Você está logado como <span className="capitalize">{role}</span>
             </p>
           </CardContent>
         </Card>
@@ -60,7 +60,7 @@ export default function DashboardPage() {
             <CardContent className="pt-6">
               <div className="flex justify-between items-center">
                 <div>
-                  <p className="text-sm font-medium uppercase text-muted-foreground">Total Products</p>
+                  <p className="text-sm font-medium uppercase text-muted-foreground">Total de Produtos</p>
                   <p className="text-2xl font-semibold">{isLoading ? "-" : totalProducts}</p>
                 </div>
                 <div className="p-3 rounded-full bg-blue-100 dark:bg-blue-900">
@@ -75,7 +75,7 @@ export default function DashboardPage() {
             <CardContent className="pt-6">
               <div className="flex justify-between items-center">
                 <div>
-                  <p className="text-sm font-medium uppercase text-muted-foreground">Low Stock Items</p>
+                  <p className="text-sm font-medium uppercase text-muted-foreground">Itens em Baixo Estoque</p>
                   <p className="text-2xl font-semibold">{isLoading ? "-" : lowStockItems}</p>
                 </div>
                 <div className="p-3 rounded-full bg-orange-100 dark:bg-orange-900">
@@ -90,7 +90,7 @@ export default function DashboardPage() {
             <CardContent className="pt-6">
               <div className="flex justify-between items-center">
                 <div>
-                  <p className="text-sm font-medium uppercase text-muted-foreground">Expiring Soon</p>
+                  <p className="text-sm font-medium uppercase text-muted-foreground">Próximos a Vencer</p>
                   <p className="text-2xl font-semibold">{isLoading ? "-" : expiringItems}</p>
                 </div>
                 <div className="p-3 rounded-full bg-red-100 dark:bg-red-900">
@@ -106,7 +106,7 @@ export default function DashboardPage() {
               <div className="flex justify-between items-center">
                 <div>
                   <p className="text-sm font-medium uppercase text-muted-foreground">
-                    {role === "admin" ? "Total Stores" : "Total Stock Items"}
+                    {role === "admin" ? "Total de Lojas" : "Total de Itens em Estoque"}
                   </p>
                   <p className="text-2xl font-semibold">{isLoading ? "-" : (role === "admin" ? "5" : totalStockItems)}</p>
                 </div>
@@ -125,28 +125,28 @@ export default function DashboardPage() {
         {/* Recent Activity */}
         <Card>
           <CardHeader>
-            <CardTitle>Recent Activity</CardTitle>
+            <CardTitle>Atividades Recentes</CardTitle>
           </CardHeader>
           <CardContent>
             <div className="overflow-x-auto">
               <table className="w-full border-collapse">
                 <thead>
                   <tr className="border-b">
-                    <th className="py-3 text-left text-xs font-medium uppercase tracking-wider">Activity</th>
-                    <th className="py-3 text-left text-xs font-medium uppercase tracking-wider">User</th>
-                    <th className="py-3 text-left text-xs font-medium uppercase tracking-wider">Date</th>
+                    <th className="py-3 text-left text-xs font-medium uppercase tracking-wider">Atividade</th>
+                    <th className="py-3 text-left text-xs font-medium uppercase tracking-wider">Usuário</th>
+                    <th className="py-3 text-left text-xs font-medium uppercase tracking-wider">Data</th>
                   </tr>
                 </thead>
                 <tbody className="divide-y">
                   <tr>
-                    <td className="py-4 whitespace-nowrap text-sm">Added 50 units of Leite Integral</td>
+                    <td className="py-4 whitespace-nowrap text-sm">Adicionado 50 unidades de Leite Integral</td>
                     <td className="py-4 whitespace-nowrap text-sm">leader_novo</td>
-                    <td className="py-4 whitespace-nowrap text-sm">1 hour ago</td>
+                    <td className="py-4 whitespace-nowrap text-sm">1 hora atrás</td>
                   </tr>
                   <tr>
-                    <td className="py-4 whitespace-nowrap text-sm">Created new product: Leite Integral</td>
+                    <td className="py-4 whitespace-nowrap text-sm">Criado novo produto: Leite Integral</td>
                     <td className="py-4 whitespace-nowrap text-sm">admin</td>
-                    <td className="py-4 whitespace-nowrap text-sm">2 hours ago</td>
+                    <td className="py-4 whitespace-nowrap text-sm">2 horas atrás</td>
                   </tr>
                   <tr>
                     <td className="py-4 whitespace-nowrap text-sm">Created new store: Loja Nova</td>
