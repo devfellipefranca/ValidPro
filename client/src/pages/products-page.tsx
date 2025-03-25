@@ -16,8 +16,8 @@ import { z } from "zod";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 
 const productSchema = z.object({
-  name: z.string().min(2, "Product name must be at least 2 characters"),
-  ean: z.string().min(8, "EAN must be at least 8 characters"),
+  name: z.string().min(2, "Nome do produto deve ter pelo menos 2 caracteres"),
+  ean: z.string().min(8, "EAN deve ter pelo menos 8 caracteres"),
 });
 
 type ProductFormValues = z.infer<typeof productSchema>;
@@ -51,8 +51,8 @@ export default function ProductsPage() {
       console.error("Error fetching products:", error);
       toast({
         variant: "destructive",
-        title: "Failed to load products",
-        description: "There was an error loading the products. Please try again.",
+        title: "Falha ao carregar produtos",
+        description: "Ocorreu um erro ao carregar os produtos. Por favor, tente novamente.",
       });
     } finally {
       setIsLoading(false);
@@ -89,8 +89,8 @@ export default function ProductsPage() {
     try {
       await productService.createProduct(data.name, data.ean);
       toast({
-        title: "Product created",
-        description: `${data.name} has been added successfully.`,
+        title: "Produto criado",
+        description: `${data.name} foi adicionado com sucesso.`,
       });
       fetchProducts(); // Refresh products list
       setDialogOpen(false);
@@ -99,8 +99,8 @@ export default function ProductsPage() {
       console.error("Error creating product:", error);
       toast({
         variant: "destructive",
-        title: "Failed to create product",
-        description: "There was an error adding the product. Please try again.",
+        title: "Falha ao criar produto",
+        description: "Ocorreu um erro ao adicionar o produto. Por favor, tente novamente.",
       });
     } finally {
       setIsCreating(false);
@@ -110,18 +110,18 @@ export default function ProductsPage() {
   return (
     <DashboardLayout>
       <PageHeader 
-        title="Products Management" 
-        description="View and manage your product inventory"
+        title="Gerenciamento de Produtos" 
+        description="Visualize e gerencie seu inventário de produtos"
       >
         <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
           <DialogTrigger asChild>
-            <Button>Add New Product</Button>
+            <Button>Adicionar Novo Produto</Button>
           </DialogTrigger>
           <DialogContent>
             <DialogHeader>
-              <DialogTitle>Add New Product</DialogTitle>
+              <DialogTitle>Adicionar Novo Produto</DialogTitle>
               <DialogDescription>
-                Enter the product details to add it to your inventory.
+                Digite os detalhes do produto para adicioná-lo ao seu inventário.
               </DialogDescription>
             </DialogHeader>
             
@@ -132,10 +132,10 @@ export default function ProductsPage() {
                   name="name"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>Product Name</FormLabel>
+                      <FormLabel>Nome do Produto</FormLabel>
                       <FormControl>
                         <Input 
-                          placeholder="Enter product name" 
+                          placeholder="Digite o nome do produto" 
                           {...field} 
                           disabled={isCreating}
                         />
@@ -153,7 +153,7 @@ export default function ProductsPage() {
                       <FormLabel>EAN</FormLabel>
                       <FormControl>
                         <Input 
-                          placeholder="Enter EAN code" 
+                          placeholder="Digite o código EAN" 
                           {...field} 
                           disabled={isCreating}
                         />
@@ -171,10 +171,10 @@ export default function ProductsPage() {
                     {isCreating ? (
                       <>
                         <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                        Adding...
+                        Adicionando...
                       </>
                     ) : (
-                      "Add Product"
+                      "Adicionar Produto"
                     )}
                   </Button>
                 </DialogFooter>
