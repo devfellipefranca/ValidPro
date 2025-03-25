@@ -149,9 +149,9 @@ export default function DashboardPage() {
                     <td className="py-4 whitespace-nowrap text-sm">2 horas atrás</td>
                   </tr>
                   <tr>
-                    <td className="py-4 whitespace-nowrap text-sm">Created new store: Loja Nova</td>
+                    <td className="py-4 whitespace-nowrap text-sm">Criada nova loja: Loja Nova</td>
                     <td className="py-4 whitespace-nowrap text-sm">admin</td>
-                    <td className="py-4 whitespace-nowrap text-sm">1 day ago</td>
+                    <td className="py-4 whitespace-nowrap text-sm">1 dia atrás</td>
                   </tr>
                 </tbody>
               </table>

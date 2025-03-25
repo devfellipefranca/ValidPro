@@ -15,10 +15,10 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Badge } from "@/components/ui/badge";
 
 const userSchema = z.object({
-  username: z.string().min(3, "Username must be at least 3 characters"),
-  password: z.string().min(6, "Password must be at least 6 characters"),
+  username: z.string().min(3, "Nome de usuário deve ter pelo menos 3 caracteres"),
+  password: z.string().min(6, "Senha deve ter pelo menos 6 caracteres"),
   role: z.enum(["promoter", "repositor"], {
-    required_error: "Please select a role",
+    required_error: "Por favor selecione um cargo",
   }),
 });
 
@@ -48,8 +48,8 @@ export default function UsersPage() {
         data.role
       );
       toast({
-        title: "User created",
-        description: `${data.username} has been created with role ${data.role}.`,
+        title: "Usuário criado",
+        description: `${data.username} foi criado com o cargo ${data.role}.`,
       });
       form.reset({
         username: "",
@@ -60,8 +60,8 @@ export default function UsersPage() {
       console.error("Error creating user:", error);
       toast({
         variant: "destructive",
-        title: "Failed to create user",
-        description: "There was an error creating the user. Please try again.",
+        title: "Falha ao criar usuário",
+        description: "Houve um erro ao criar o usuário. Por favor, tente novamente.",
       });
     } finally {
       setIsCreating(false);
@@ -71,8 +71,8 @@ export default function UsersPage() {
   return (
     <DashboardLayout>
       <PageHeader
-        title="Users Management"
-        description="Create and manage store users"
+        title="Gerenciamento de Usuários"
+        description="Criar e gerenciar usuários da loja"
       />
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
@@ -80,7 +80,7 @@ export default function UsersPage() {
         <div>
           <Card>
             <CardHeader>
-              <CardTitle>Create New User</CardTitle>
+              <CardTitle>Criar Novo Usuário</CardTitle>
             </CardHeader>
             <CardContent>
               <Form {...form}>
@@ -90,10 +90,10 @@ export default function UsersPage() {
                     name="username"
                     render={({ field }) => (
                       <FormItem>
-                        <FormLabel>Username</FormLabel>
+                        <FormLabel>Nome de usuário</FormLabel>
                         <FormControl>
                           <Input
-                            placeholder="Enter username"
+                            placeholder="Digite o nome de usuário"
                             {...field}
                             disabled={isCreating}
                           />
@@ -108,11 +108,11 @@ export default function UsersPage() {
                     name="password"
                     render={({ field }) => (
                       <FormItem>
-                        <FormLabel>Password</FormLabel>
+                        <FormLabel>Senha</FormLabel>
                         <FormControl>
                           <Input
                             type="password"
-                            placeholder="Enter password"
+                            placeholder="Digite a senha"
                             {...field}
                             disabled={isCreating}
                           />
@@ -127,7 +127,7 @@ export default function UsersPage() {
                     name="role"
                     render={({ field }) => (
                       <FormItem>
-                        <FormLabel>Role</FormLabel>
+                        <FormLabel>Cargo</FormLabel>
                         <Select
                           onValueChange={field.onChange}
                           defaultValue={field.value}
@@ -135,11 +135,11 @@ export default function UsersPage() {
                         >
                           <FormControl>
                             <SelectTrigger>
-                              <SelectValue placeholder="Select a role" />
+                              <SelectValue placeholder="Selecione um cargo" />
                             </SelectTrigger>
                           </FormControl>
                           <SelectContent>
-                            <SelectItem value="promoter">Promoter</SelectItem>
+                            <SelectItem value="promoter">Promotor</SelectItem>
                             <SelectItem value="repositor">Repositor</SelectItem>
                           </SelectContent>
                         </Select>
