@@ -156,10 +156,10 @@ export default function UsersPage() {
                     {isCreating ? (
                       <>
                         <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                        Creating...
+                        Criando...
                       </>
                     ) : (
-                      "Create User"
+                      "Criar Usuário"
                     )}
                   </Button>
                 </form>
@@ -172,16 +172,16 @@ export default function UsersPage() {
         <div className="md:col-span-2">
           <Card>
             <CardHeader>
-              <CardTitle>Store Users</CardTitle>
+              <CardTitle>Usuários da Loja</CardTitle>
             </CardHeader>
             <CardContent>
               <div className="overflow-x-auto">
                 <table className="w-full">
                   <thead>
                     <tr className="border-b">
-                      <th className="px-4 py-3 text-left text-xs font-medium uppercase tracking-wider">Username</th>
-                      <th className="px-4 py-3 text-left text-xs font-medium uppercase tracking-wider">Role</th>
-                      <th className="px-4 py-3 text-left text-xs font-medium uppercase tracking-wider">Created</th>
+                      <th className="px-4 py-3 text-left text-xs font-medium uppercase tracking-wider">Nome de usuário</th>
+                      <th className="px-4 py-3 text-left text-xs font-medium uppercase tracking-wider">Cargo</th>
+                      <th className="px-4 py-3 text-left text-xs font-medium uppercase tracking-wider">Criado em</th>
                       <th className="px-4 py-3 text-left text-xs font-medium uppercase tracking-wider">Status</th>
                     </tr>
                   </thead>
@@ -190,13 +190,13 @@ export default function UsersPage() {
                       <td className="px-4 py-4 whitespace-nowrap text-sm font-medium">promoter_1</td>
                       <td className="px-4 py-4 whitespace-nowrap text-sm">
                         <Badge variant="outline" className="bg-blue-100 text-blue-800 hover:bg-blue-100 dark:bg-blue-800 dark:text-blue-100 dark:hover:bg-blue-800">
-                          Promoter
+                          Promotor
                         </Badge>
                       </td>
-                      <td className="px-4 py-4 whitespace-nowrap text-sm">2 days ago</td>
+                      <td className="px-4 py-4 whitespace-nowrap text-sm">2 dias atrás</td>
                       <td className="px-4 py-4 whitespace-nowrap text-sm">
                         <Badge variant="outline" className="bg-green-100 text-green-800 hover:bg-green-100 dark:bg-green-800 dark:text-green-100 dark:hover:bg-green-800">
-                          Active
+                          Ativo
                         </Badge>
                       </td>
                     </tr>
@@ -207,10 +207,10 @@ export default function UsersPage() {
                           Repositor
                         </Badge>
                       </td>
-                      <td className="px-4 py-4 whitespace-nowrap text-sm">1 week ago</td>
+                      <td className="px-4 py-4 whitespace-nowrap text-sm">1 semana atrás</td>
                       <td className="px-4 py-4 whitespace-nowrap text-sm">
                         <Badge variant="outline" className="bg-green-100 text-green-800 hover:bg-green-100 dark:bg-green-800 dark:text-green-100 dark:hover:bg-green-800">
-                          Active
+                          Ativo
                         </Badge>
                       </td>
                     </tr>
