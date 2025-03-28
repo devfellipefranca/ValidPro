@@ -1,0 +1,31 @@
+{
+  "name": "frontend-api-tester",
+  "version": "1.0.0",
+  "description": "A frontend application to test API endpoints.",
+  "main": "src/index.jsx",
+  "scripts": {
+    "start": "webpack serve --mode development",
+    "build": "webpack --mode production",
+    "test": "jest"
+  },
+  "dependencies": {
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2"
+  },
+  "devDependencies": {
+    "webpack": "^5.38.1",
+    "webpack-cli": "^4.7.0",
+    "webpack-dev-server": "^3.11.2",
+    "babel-loader": "^8.2.2",
+    "jest": "^26.6.3",
+    "eslint": "^7.14.0",
+    "eslint-plugin-react": "^7.27.0"
+  },
+  "keywords": [
+    "frontend",
+    "api",
+    "tester"
+  ],
+  "author": "Your Name",
+  "license": "MIT"
+}
