@@ -1,4 +1,4 @@
-// API Response Types
+// tipos de rspota da API
 export interface LoginResponse {
   token: string;
   role: string;
@@ -17,7 +17,6 @@ export interface ProductResponse {
   message: string;
 }
 
-// Data Types
 export interface Product {
   product_id: number;
   name: string;
@@ -32,13 +31,13 @@ export interface StockItem {
   expiration_date: string;
   quantity: number;
   days_remaining: number;
-  store_name?: string; // For admin view
+  store_name?: string; 
 }
 
 export interface Store {
   store_id: number;
   name: string;
-  leader_username: string;
+  leader: string;
   created_at: string;
 }
 
@@ -49,7 +48,6 @@ export interface User {
   store_id?: number;
 }
 
-// Form Types
 export interface LoginFormData {
   username: string;
   password: string;
@@ -86,5 +84,10 @@ export interface StockFilterData {
   max_quantity?: number;
 }
 
-// Role type for authorization
+export interface Activity {
+  description: string;
+  username: string;
+  created_at: string;
+}
+// Tipo de autorizacao 
 export type UserRole = "admin" | "leader" | "promoter" | "repositor";

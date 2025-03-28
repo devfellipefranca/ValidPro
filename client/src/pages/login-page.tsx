@@ -105,7 +105,7 @@ export default function LoginPage() {
         </CardContent>
         <CardFooter className="flex justify-center">
           <p className="text-xs text-muted-foreground">
-            Credenciais de demonstração: admin/admin123 (Admin) ou leader_novo/leader123 (Líder)
+            &copy; 2025 ValidaPro. Todos os direitos reservados. 
           </p>
         </CardFooter>
       </Card>

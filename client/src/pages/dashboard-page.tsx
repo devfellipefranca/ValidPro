@@ -3,45 +3,116 @@ import DashboardLayout from "@/components/layouts/DashboardLayout";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { useAuth } from "@/hooks/use-auth";
 import { Package, AlertTriangle, Calendar, Store, Boxes } from "lucide-react";
-import { productService, stockService } from "@/lib/api";
-import { Product, StockItem } from "@/lib/types";
+import { productService, stockService, activityService } from "@/lib/api";
+import { Product, StockItem, Activity } from "@/lib/types";
+import { useToast } from "@/hooks/use-toast";
+
+
 
 export default function DashboardPage() {
   const { username, role } = useAuth();
   const [products, setProducts] = useState<Product[]>([]);
   const [stockItems, setStockItems] = useState<StockItem[]>([]);
+  const [activities, setActivities] = useState<Activity[]>([]); // Tipo explícito para activities
   const [isLoading, setIsLoading] = useState(true);
+  const { toast } = useToast();
 
   useEffect(() => {
     async function fetchData() {
+      setIsLoading(true);
       try {
-        // Fetch products
-        const productsData = await productService.getProducts();
+        const [productsData, stockData, activitiesData] = await Promise.all([
+          productService.getProducts(),
+          stockService.getStock(),
+          activityService.getActivities(), // Usa /api conforme api.ts
+        ]);
+
         setProducts(productsData);
-        
-        // Fetch stock items
-        const stockData = await stockService.getStock();
         setStockItems(stockData);
+        setActivities(activitiesData);
       } catch (error) {
-        console.error("Error fetching dashboard data:", error);
+        console.error("Erro ao buscar dados do dashboard:", error);
+        if (error instanceof Error && (error as any).response?.status === 401) {
+          toast({
+            variant: "destructive",
+            title: "Sessão expirada",
+            description: "Por favor, faça login novamente.",
+          });
+        } else if (error instanceof Error) {
+          toast({
+            variant: "destructive",
+            title: "Erro inesperado",
+            description: `Erro: ${error.message}`,
+          });
+        } else {
+          toast({
+            variant: "destructive",
+            title: "Falha ao carregar dados",
+            description: "Não foi possível carregar os dados do dashboard. Verifique sua conexão ou tente novamente.",
+          });
+        }
       } finally {
         setIsLoading(false);
       }
     }
-    
-    fetchData();
-  }, []);
 
-  // Calculate dashboard metrics
+    fetchData();
+  }, [toast]);
+
   const totalProducts = products.length;
   const lowStockItems = stockItems.filter(item => item.quantity < 15).length;
   const expiringItems = stockItems.filter(item => item.days_remaining < 10).length;
   const totalStockItems = stockItems.length;
 
+  interface RelativeTimeProps {
+    timestamp: string | number | Date;
+  }
+
+  const getRelativeTime = (timestamp: RelativeTimeProps["timestamp"]): string => {
+    const now = new Date();
+    const activityDate = new Date(timestamp);
+    const diffMs = now.getTime() - activityDate.getTime();
+    const diffHours = Math.floor(diffMs / (1000 * 60 * 60));
+    const diffDays = Math.floor(diffHours / 24);
+
+    if (diffHours < 1) return 'Há menos de 1 hora';
+    if (diffHours < 24) return `${diffHours} hora${diffHours > 1 ? 's' : ''} atrás`;
+    return `${diffDays} dia${diffDays > 1 ? 's' : ''} atrás`;
+  };
+  const renderActivitiesContent = () => {
+    if (isLoading) {
+      return (
+        <tr>
+          <td colSpan={3} className="py-4 text-center text-sm text-muted-foreground">
+            Carregando atividades...
+          </td>
+        </tr>
+      );
+    }
+
+    if (activities.length === 0) {
+      return (
+        <tr>
+          <td colSpan={3} className="py-4 text-center text-sm text-muted-foreground">
+            Nenhuma atividade recente
+          </td>
+        </tr>
+      );
+    }
+    return activities.map((activity, index) => (
+      <tr key={index}>
+        <td className="py-4 whitespace-nowrap text-sm">{activity.description}</td>
+        <td className="py-4 whitespace-nowrap text-sm">{activity.username}</td>
+        <td className="py-4 whitespace-nowrap text-sm">
+          {getRelativeTime(activity.created_at)}
+        </td>
+      </tr>
+    ));
+  };
   return (
     <DashboardLayout>
       <div className="space-y-6">
-        {/* Welcome Card */}
+        {/* Cartão de boas-vindas */}
         <Card>
           <CardContent className="pt-6">
             <h3 className="text-xl font-semibold">
@@ -69,8 +140,8 @@ export default function DashboardPage() {
               </div>
             </CardContent>
           </Card>
-          
-          {/* Low Stock Items */}
+
+          {/* Itens com pouca quantidade */}
           <Card>
             <CardContent className="pt-6">
               <div className="flex justify-between items-center">
@@ -84,8 +155,8 @@ export default function DashboardPage() {
               </div>
             </CardContent>
           </Card>
-          
-          {/* Expiring Soon */}
+
+          {/* Próximos a vencer */}
           <Card>
             <CardContent className="pt-6">
               <div className="flex justify-between items-center">
@@ -99,8 +170,8 @@ export default function DashboardPage() {
               </div>
             </CardContent>
           </Card>
-          
-          {/* Total Stores or Stock Items */}
+
+          {/* Total de Lojas ou Stock de Items */}
           <Card>
             <CardContent className="pt-6">
               <div className="flex justify-between items-center">
@@ -108,7 +179,17 @@ export default function DashboardPage() {
                   <p className="text-sm font-medium uppercase text-muted-foreground">
                     {role === "admin" ? "Total de Lojas" : "Total de Itens em Estoque"}
                   </p>
-                  <p className="text-2xl font-semibold">{isLoading ? "-" : (role === "admin" ? "5" : totalStockItems)}</p>
+                  {(() => {
+                    let displayValue;
+                    if (isLoading) {
+                      displayValue = "-";
+                    } else if (role === "admin") {
+                      displayValue = "5"; // Substitua por uma API real se necessário
+                    } else {
+                      displayValue = totalStockItems;
+                    }
+                    return <p className="text-2xl font-semibold">{displayValue}</p>;
+                  })()}
                 </div>
                 <div className="p-3 rounded-full bg-green-100 dark:bg-green-900">
                   {role === "admin" ? (
@@ -122,7 +203,7 @@ export default function DashboardPage() {
           </Card>
         </div>
 
-        {/* Recent Activity */}
+        {/* Atividades Recentes */}
         <Card>
           <CardHeader>
             <CardTitle>Atividades Recentes</CardTitle>
@@ -138,21 +219,7 @@ export default function DashboardPage() {
                   </tr>
                 </thead>
                 <tbody className="divide-y">
-                  <tr>
-                    <td className="py-4 whitespace-nowrap text-sm">Adicionado 50 unidades de Leite Integral</td>
-                    <td className="py-4 whitespace-nowrap text-sm">leader_novo</td>
-                    <td className="py-4 whitespace-nowrap text-sm">1 hora atrás</td>
-                  </tr>
-                  <tr>
-                    <td className="py-4 whitespace-nowrap text-sm">Criado novo produto: Leite Integral</td>
-                    <td className="py-4 whitespace-nowrap text-sm">admin</td>
-                    <td className="py-4 whitespace-nowrap text-sm">2 horas atrás</td>
-                  </tr>
-                  <tr>
-                    <td className="py-4 whitespace-nowrap text-sm">Criada nova loja: Loja Nova</td>
-                    <td className="py-4 whitespace-nowrap text-sm">admin</td>
-                    <td className="py-4 whitespace-nowrap text-sm">1 dia atrás</td>
-                  </tr>
+                  {renderActivitiesContent()}
                 </tbody>
               </table>
             </div>

@@ -4,9 +4,9 @@ import { Loader2 } from "lucide-react";
 import { UserRole } from "@/lib/types";
 
 interface ProtectedRouteProps {
-  path: string;
-  component: React.ComponentType;
-  roles?: UserRole[];
+  readonly path: string;
+  readonly component: React.ComponentType;
+  readonly roles?: UserRole[];
 }
 
 export function ProtectedRoute({ path, component: Component, roles }: ProtectedRouteProps) {

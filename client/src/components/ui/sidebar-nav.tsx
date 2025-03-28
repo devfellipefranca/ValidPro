@@ -13,15 +13,15 @@ import {
 } from "lucide-react";
 
 interface SidebarNavProps {
-  items: {
-    href: string;
-    label: string;
-    icon: string;
+  readonly items: {
+    readonly href: string;
+    readonly label: string;
+    readonly icon: string;
   }[];
-  open?: boolean;
-  onOpenChange?: (open: boolean) => void;
-  className?: string;
-  children?: ReactNode;
+  readonly open?: boolean;
+  readonly onOpenChange?: (open: boolean) => void;
+  readonly className?: string;
+  readonly children?: ReactNode;
 }
 
 export default function SidebarNav({
@@ -70,9 +70,10 @@ export default function SidebarNav({
     <>
       {/* Backdrop for mobile */}
       {open && (
-        <div 
+        <button
           className="fixed inset-0 z-20 bg-background/80 backdrop-blur-sm md:hidden"
           onClick={() => onOpenChange?.(false)}
+          aria-label="Close sidebar backdrop"
         />
       )}
       
@@ -89,7 +90,7 @@ export default function SidebarNav({
           <div className="h-16 flex items-center justify-between px-4 border-b">
             <div className="flex items-center">
               <Store className="mr-2 h-6 w-6 text-primary" />
-              <h1 className="text-xl font-bold truncate">Inventory System</h1>
+              <h1 className="text-xl font-bold truncate">ValidaPro</h1>
             </div>
             {/* Close button (mobile only) */}
             <Button
